@@ -1,7 +1,8 @@
-// Wrap everything safely inside DOMContentLoaded to prevent early execution crashes
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 1. WATER CLICKER STATE & 20 UPGRADES ---
+    // ==========================================
+    // --- 1. WATER CLICKER GAME & 20 UPGRADES ---
+    // ==========================================
     let bottles = 0;
     let clickPower = 1;
     let autoRate = 0;
@@ -35,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const clickBtn = document.getElementById('click-btn');
     const upgradesContainer = document.getElementById('upgrades-container');
 
-    // Safely generate all 20 upgrade buttons in HTML
     function buildUpgradesUI() {
         if (!upgradesContainer) return;
         upgradesContainer.innerHTML = '';
@@ -92,45 +92,193 @@ document.addEventListener('DOMContentLoaded', () => {
     buildUpgradesUI();
     updateDisplay();
 
-    // --- 2. DARK MODE TOGGLE ---
-    const themeBtn = document.getElementById('theme-btn');
-    if (themeBtn) {
-        themeBtn.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            themeBtn.textContent = document.body.classList.contains('dark-mode') ? '☀️ Light Mode' : '🌙 Dark Mode';
+    // ==========================================
+    // --- 2. TAB SWITCHING SYSTEM ---
+    // ==========================================
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
+
+            btn.classList.add('active');
+            const targetId = btn.id.replace('tab-', '').replace('-btn', '') + '-section';
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) targetSection.classList.add('active');
+        });
+    });
+
+    // ==========================================
+    // --- 3. WORKING SNAKE GAME ---
+    // ==========================================
+    const canvas = document.getElementById('snakeCanvas');
+    const ctx = canvas ? canvas.getContext('2d') : null;
+    const snakeScoreDisplay = document.getElementById('snake-score');
+    const startSnakeBtn = document.getElementById('start-snake-btn');
+
+    const gridSize = 15;
+    const tileCount = 20; // 300 / 15 = 20
+    let snake = [{ x: 10, y: 10 }];
+    let food = { x: 5, y: 5 };
+    let dx = 1;
+    let dy = 0;
+    let snakeScore = 0;
+    let snakeGameInterval = null;
+
+    function gameLoop() {
+        if (!ctx) return;
+
+        // Calculate new head position
+        const head = { x: snake[0].x + dx, y: snake[0].y + dy };
+
+        // Wall collisions
+        if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) {
+            alert(`Snake Game Over! Final Score: ${snakeScore}`);
+            clearInterval(snakeGameInterval);
+            return;
+        }
+
+        // Self collision
+        for (let i = 0; i < snake.length; i++) {
+            if (snake[i].x === head.x && snake[i].y === head.y) {
+                alert(`Snake Game Over! Final Score: ${snakeScore}`);
+                clearInterval(snakeGameInterval);
+                return;
+            }
+        }
+
+        snake.unshift(head);
+
+        // Food collision
+        if (head.x === food.x && head.y === food.y) {
+            snakeScore += 10;
+            bottles += 50; // Bonus reward!
+            if (snakeScoreDisplay) snakeScoreDisplay.textContent = snakeScore;
+            updateDisplay();
+            placeFood();
+        } else {
+            snake.pop();
+        }
+
+        // Draw Canvas Background
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Draw Food
+        ctx.fillStyle = '#ef4444';
+        ctx.fillRect(food.x * gridSize, food.y * gridSize, gridSize - 2, gridSize - 2);
+
+        // Draw Snake
+        ctx.fillStyle = '#38bdf8';
+        snake.forEach(part => {
+            ctx.fillRect(part.x * gridSize, part.y * gridSize, gridSize - 2, gridSize - 2);
         });
     }
 
-    // --- 3. TAB NAVIGATION SYSTEM ---
-    const tabClickerBtn = document.getElementById('tab-clicker-btn');
-    const tabSnakeBtn = document.getElementById('tab-snake-btn');
-    const tabTttBtn = document.getElementById('tab-ttt-btn');
-    const tabChessBtn = document.getElementById('tab-chess-btn');
-    const tabCalcBtn = document.getElementById('tab-calc-btn');
-
-    const clickerSection = document.getElementById('clicker-section');
-    const snakeSection = document.getElementById('snake-section');
-    const tttSection = document.getElementById('ttt-section');
-    const chessSection = document.getElementById('chess-section');
-    const calcSection = document.getElementById('calc-section');
-
-    const allTabs = [tabClickerBtn, tabSnakeBtn, tabTttBtn, tabChessBtn, tabCalcBtn];
-    const allSections = [clickerSection, snakeSection, tttSection, chessSection, calcSection];
-
-    function switchTab(activeBtn, activeSection) {
-        allTabs.forEach(tab => tab?.classList.remove('active'));
-        allSections.forEach(sec => sec?.classList.remove('active'));
-        activeBtn?.classList.add('active');
-        activeSection?.classList.add('active');
+    function placeFood() {
+        food.x = Math.floor(Math.random() * tileCount);
+        food.y = Math.floor(Math.random() * tileCount);
     }
 
-    tabClickerBtn?.addEventListener('click', () => switchTab(tabClickerBtn, clickerSection));
-    tabSnakeBtn?.addEventListener('click', () => switchTab(tabSnakeBtn, snakeSection));
-    tabTttBtn?.addEventListener('click', () => switchTab(tabTttBtn, tttSection));
-    tabChessBtn?.addEventListener('click', () => switchTab(tabChessBtn, chessSection));
-    tabCalcBtn?.addEventListener('click', () => switchTab(tabCalcBtn, calcSection));
+    function resetSnake() {
+        snake = [{ x: 10, y: 10 }];
+        dx = 1;
+        dy = 0;
+        snakeScore = 0;
+        if (snakeScoreDisplay) snakeScoreDisplay.textContent = snakeScore;
+        placeFood();
+        if (snakeGameInterval) clearInterval(snakeGameInterval);
+        snakeGameInterval = setInterval(gameLoop, 120);
+    }
 
-    // --- 4. TIC-TAC-TOE ENGINE ---
+    startSnakeBtn?.addEventListener('click', resetSnake);
+
+    window.addEventListener('keydown', e => {
+        if ((e.key === 'ArrowUp' || e.key === 'w') && dy === 0) { dx = 0; dy = -1; }
+        if ((e.key === 'ArrowDown' || e.key === 's') && dy === 0) { dx = 0; dy = 1; }
+        if ((e.key === 'ArrowLeft' || e.key === 'a') && dx === 0) { dx = -1; dy = 0; }
+        if ((e.key === 'ArrowRight' || e.key === 'd') && dx === 0) { dx = 1; dy = 0; }
+    });
+
+    // ==========================================
+    // --- 4. WORKING INTERACTIVE CHESS GAME ---
+    // ==========================================
+    const chessBoardEl = document.getElementById('chess-board');
+    const chessStatus = document.getElementById('chess-status');
+    let selectedSquare = null;
+    let turn = 'White';
+
+    const initialChessState = [
+        ["♜","♞","♝","♛","♚","♝","♞","♜"],
+        ["♟","♟","♟","♟","♟","♟","♟","♟"],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["♙","♙","♙","♙","♙","♙","♙","♙"],
+        ["♖","♘","♗","♕","♔","♗","♘","♖"]
+    ];
+
+    let chessState = JSON.parse(JSON.stringify(initialChessState));
+
+    function renderChessBoard() {
+        if (!chessBoardEl) return;
+        chessBoardEl.innerHTML = '';
+
+        for (let r = 0; r < 8; r++) {
+            for (let c = 0; c < 8; c++) {
+                const sq = document.createElement('div');
+                sq.className = `chess-square ${(r + c) % 2 === 0 ? 'light' : 'dark'}`;
+                sq.textContent = chessState[r][c];
+
+                if (selectedSquare && selectedSquare.r === r && selectedSquare.c === c) {
+                    sq.classList.add('selected');
+                }
+
+                sq.addEventListener('click', () => handleChessClick(r, c));
+                chessBoardEl.appendChild(sq);
+            }
+        }
+    }
+
+    function handleChessClick(r, c) {
+        const piece = chessState[r][c];
+
+        // Step 1: Selecting a piece
+        if (!selectedSquare) {
+            if (piece !== "") {
+                selectedSquare = { r, c };
+                renderChessBoard();
+            }
+        } else {
+            // Step 2: Moving the selected piece to destination
+            chessState[r][c] = chessState[selectedSquare.r][selectedSquare.c];
+            chessState[selectedSquare.r][selectedSquare.c] = "";
+            selectedSquare = null;
+            
+            // Toggle turn
+            turn = turn === 'White' ? 'Black' : 'White';
+            if (chessStatus) chessStatus.textContent = `${turn}'s Turn — Select a piece to move!`;
+
+            renderChessBoard();
+        }
+    }
+
+    document.getElementById('reset-chess-btn')?.addEventListener('click', () => {
+        chessState = JSON.parse(JSON.stringify(initialChessState));
+        selectedSquare = null;
+        turn = 'White';
+        if (chessStatus) chessStatus.textContent = "White's Turn — Select a piece to move!";
+        renderChessBoard();
+    });
+
+    renderChessBoard();
+
+    // ==========================================
+    // --- 5. TIC-TAC-TOE ENGINE ---
+    // ==========================================
     let tttBoard = ["", "", "", "", "", "", "", "", ""];
     let currentPlayer = "X";
     const tttStatus = document.getElementById('ttt-status');
@@ -166,57 +314,9 @@ document.addEventListener('DOMContentLoaded', () => {
         tttCells.forEach(c => c.textContent = "");
     });
 
-    // --- 5. CHESS ENGINE ---
-    const chessBoardEl = document.getElementById('chess-board');
-    let selectedSquare = null;
-    let initialChessState = [
-        ["♜","♞","♝","♛","♚","♝","♞","♜"],
-        ["♟","♟","♟","♟","♟","♟","♟","♟"],
-        ["","","","","","","",""],
-        ["","","","","","","",""],
-        ["","","","","","","",""],
-        ["","","","","","","",""],
-        ["♙","♙","♙","♙","♙","♙","♙","♙"],
-        ["♖","♘","♗","♕","♔","♗","♘","♖"]
-    ];
-    let chessState = JSON.parse(JSON.stringify(initialChessState));
-
-    function renderChessBoard() {
-        if (!chessBoardEl) return;
-        chessBoardEl.innerHTML = '';
-        for (let r = 0; r < 8; r++) {
-            for (let c = 0; c < 8; c++) {
-                const sq = document.createElement('div');
-                sq.className = `chess-square ${(r + c) % 2 === 0 ? 'light' : 'dark'}`;
-                sq.textContent = chessState[r][c];
-                sq.addEventListener('click', () => handleChessClick(r, c, sq));
-                chessBoardEl.appendChild(sq);
-            }
-        }
-    }
-
-    function handleChessClick(r, c, sqElement) {
-        if (!selectedSquare) {
-            if (chessState[r][c] !== "") {
-                selectedSquare = { r, c };
-                sqElement.classList.add('selected');
-            }
-        } else {
-            chessState[r][c] = chessState[selectedSquare.r][selectedSquare.c];
-            chessState[selectedSquare.r][selectedSquare.c] = "";
-            selectedSquare = null;
-            renderChessBoard();
-        }
-    }
-
-    document.getElementById('reset-chess-btn')?.addEventListener('click', () => {
-        chessState = JSON.parse(JSON.stringify(initialChessState));
-        selectedSquare = null;
-        renderChessBoard();
-    });
-    renderChessBoard();
-
-    // --- 6. CALCULATOR ENGINE ---
+    // ==========================================
+    // --- 6. TI-84 CALCULATOR ENGINE ---
+    // ==========================================
     const calcScreen = document.getElementById('calc-display');
     const numBtns = document.querySelectorAll('.num-btn');
     const clearBtn = document.getElementById('calc-clear');

@@ -1,7 +1,7 @@
 /* Color Palette and Animation Styling */
 :root {
     --bg-color: #0d1117;
-    --card-bg: rgba(22, 27, 34, 0.9);
+    --card-bg: rgba(22, 27, 34, 0.95);
     --text-color: #58a6ff;
     --accent-color: #8957e5;
     --accent-hover: #a371f7;
@@ -10,7 +10,7 @@
 
 body.dark-mode {
     --bg-color: #f0f6fc;
-    --card-bg: rgba(255, 255, 255, 0.9);
+    --card-bg: rgba(255, 255, 255, 0.95);
     --text-color: #0969da;
     --accent-color: #1f6feb;
     --accent-hover: #388bfd;
@@ -127,6 +127,7 @@ body {
     width: 100%;
     text-align: center;
     backdrop-filter: blur(5px);
+    box-sizing: border-box;
 }
 
 .upgrades-scroll {
@@ -257,8 +258,9 @@ body {
 
 .calc-btn.op { background: #1f6feb; }
 .calc-btn.fn { background: #8957e5; }
-.calc-btn.enter { background: #238636; grid-column: span 1; }
+.calc-btn.enter { background: #238636; }
 .calc-btn.clear { background: #da3633; }
+
 .action-btn {
     background: var(--accent-color);
     color: white;
@@ -268,4 +270,14 @@ body {
     width: 100%;
     margin-top: 10px;
     cursor: pointer;
+}
+
+.theme-toggle {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-bottom: 10px;
 }

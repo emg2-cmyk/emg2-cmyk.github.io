@@ -1,22 +1,40 @@
-// Wait for the browser to load the HTML before running JavaScript
-document.addEventListener('DOMContentLoaded', () => {
+// Initialize game variables
+let waterCount = 0;
+let clickPower = 1;
+let upgradeCost = 15;
+
+// Grab elements from our HTML document
+const scoreDisplay = document.getElementById("score");
+const clickTarget = document.getElementById("click-target");
+const upgradeBtn = document.getElementById("upgrade-btn");
+const upgradeCostDisplay = document.getElementById("upgrade-cost");
+
+// Listen for clicks on the water bottle
+clickTarget.addEventListener("click", function() {
+    // Increase water count by current click power
+    waterCount += clickPower;
     
-    // Select our button and the header element from the HTML
-    const colorBtn = document.getElementById('colorBtn');
-    const header = document.querySelector('header');
+    // Update the visual score on the screen
+    scoreDisplay.textContent = waterCount;
+});
 
-    // Array of fun background colors for the header
-    const colors = ['#4a90e2', '#50e3c2', '#f5a623', '#9013fe', '#e91e63'];
-
-    // Add a 'click' event listener to the button
-    colorBtn.addEventListener('click', () => {
-        // Pick a random color from our array
-        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+// Listen for clicks on the upgrade button
+upgradeBtn.addEventListener("click", function() {
+    // Check if the user has enough water bottles to buy the upgrade
+    if (waterCount >= upgradeCost) {
+        waterCount -= upgradeCost; // Subtract the cost from score
+        clickPower += 1;          // Increase power per click
         
-        // Change the header background color dynamically!
-        header.style.backgroundColor = randomColor;
+        // Increase the upgrade cost exponentially for next time
+        upgradeCost = Math.round(upgradeCost * 1.5);
         
-        console.log(`Header color changed to: ${randomColor}`);
-    });
-
+        // Refresh the text displayed on the screen
+        scoreDisplay.textContent = waterCount;
+        upgradeCostDisplay.textContent = upgradeCost;
+        
+        // Update button text to show new stats
+        upgradeBtn.textContent = `Buy Water Filter (Cost: ${upgradeCost}) - +${clickPower} Per Click`;
+    } else {
+        alert("Not enough water bottles saved up yet! Keep clicking!");
+    }
 });

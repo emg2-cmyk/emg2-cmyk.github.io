@@ -1,6 +1,6 @@
 /* Color Palette and Animation Styling */
-drftgyhujiokpl:root {
-    --bg-color: #0d1117;
+:root {
+    --bg-color: #0d6117;
     --card-bg: rgba(22, 27, 34, 0.95);
     --text-color: #58a6ff;
     --accent-color: #8957e5;

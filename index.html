@@ -3,33 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Awesome Website</title>
+    <title>Water Bottle Clicker</title>
     <!-- Link to our external CSS stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Main header section -->
-    <header>
-        <h1>Welcome to My Website!</h1>
-        <p>Built with HTML, CSS, and JavaScript, hosted on GitHub Pages.</p>
-    </header>
+    <div class="game-container">
+        <h1>💧 Water Bottle Clicker 💧</h1>
+        <p>Stay hydrated and click the bottle to stack up water!</p>
+        
+        <!-- Score display -->
+        <div class="score-board">
+            <span id="score">0</span> Water Bottles
+        </div>
 
-    <!-- Interactive section -->
-    <main>
-        <section class="card">
-            <h2>Interactive Area</h2>
-            <p>Click the button below to see JavaScript in action!</p>
-            <button id="colorBtn">Click Me!</button>
-        </section>
-    </main>
+        <!-- Clickable Water Bottle Image -->
+        <div id="click-target" class="bottle">
+            🧴
+        </div>
 
-    <!-- Footer section -->
-    <footer>
-        <p>&copy; 2026 My Web Development Journey</p>
-    </footer>
+        <!-- Upgrade Button -->
+        <div class="shop">
+            <button id="upgrade-btn">Buy Water Filter (Cost: <span id="upgrade-cost">15</span>) - +1 Per Click</button>
+        </div>
+    </div>
 
-    <!-- Link to our external JavaScript file (loaded at the end of body) -->
+    <!-- Link to our external JavaScript file -->
     <script src="script.js"></script>
 </body>
 </html>

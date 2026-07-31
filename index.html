@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mega Hydration Arcade & Utilities</title>
+    <title>Mega RGB Hydration Arcade</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="space-scene">
-        <div class="ufo-wrapper">
-            <div class="ufo">🛸</div>
-            <div class="tractor-beam"></div>
-            <div class="cow">🐄</div>
-        </div>
+<body class="rgb-bg">
+    <div class="farm-sky">
+        <div class="flying-animal animal-1">🐄</div>
+        <div class="flying-animal animal-2">🐖</div>
+        <div class="flying-animal animal-3">🐔</div>
+        <div class="flying-animal animal-4">🐑</div>
+        <div class="flying-animal animal-5">🐴</div>
     </div>
 
     <header>
         <h1 class="rainbow-text">✨ Ultimate Hydration Arcade ✨</h1>
-        <button id="theme-btn" class="theme-toggle">🌙 Dark Mode</button>
+        <button id="theme-btn" class="theme-toggle">🌙 Toggle Theme Mode</button>
         
         <nav class="tab-nav">
             <button id="tab-clicker-btn" class="tab-btn active">Clicker Game 💧</button>
@@ -47,6 +47,7 @@
             <canvas id="snakeCanvas" width="300" height="300"></canvas>
             <br>
             <button id="start-snake-btn" class="action-btn">Start / Restart Snake</button>
+            <p class="instructions">Controls: Arrow Keys or W-A-S-D</p>
         </section>
 
         <section id="ttt-section" class="game-card tab-content">
@@ -67,8 +68,8 @@
         </section>
 
         <section id="chess-section" class="game-card tab-content">
-            <h2>Quick Chess ♟️</h2>
-            <p id="chess-status">White's Turn - Click a piece to select/move</p>
+            <h2>Interactive Chess ♟️</h2>
+            <p id="chess-status">White's Turn — Click a piece to select, then click a square to move!</p>
             <div id="chess-board" class="chess-board"></div>
             <button id="reset-chess-btn" class="action-btn">Reset Board</button>
         </section>

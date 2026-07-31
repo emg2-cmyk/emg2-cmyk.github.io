@@ -3,51 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Hydration Hub</title>
+    <title>Mega Hydration Arcade & Utilities</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="space-scene">
+        <div class="ufo-wrapper">
+            <div class="ufo">🛸</div>
+            <div class="tractor-beam"></div>
+            <div class="cow">🐄</div>
+        </div>
+    </div>
+
     <header>
-        <h1>💧 Ultimate Hydration Hub 💧</h1>
+        <h1 class="rainbow-text">✨ Ultimate Hydration Arcade ✨</h1>
         <button id="theme-btn" class="theme-toggle">🌙 Dark Mode</button>
+        
         <nav class="tab-nav">
-            <button id="tab-clicker-btn" class="tab-btn active">Water Clicker</button>
-            <button id="tab-snake-btn" class="tab-btn">Snake Game 🐍</button>
+            <button id="tab-clicker-btn" class="tab-btn active">Clicker Game 💧</button>
+            <button id="tab-snake-btn" class="tab-btn">Snake 🐍</button>
+            <button id="tab-ttt-btn" class="tab-btn">Tic-Tac-Toe ❌⭕</button>
+            <button id="tab-chess-btn" class="tab-btn">Chess ♟️</button>
+            <button id="tab-calc-btn" class="tab-btn">TI-84 CE 🧮</button>
         </nav>
     </header>
 
     <main>
         <section id="clicker-section" class="game-card tab-content active">
-            <div id="achievement-badge" class="badge">Title: Water Novice 🥉</div>
-            
-            <h2>Bottles Collected: <span id="bottle-count">0</span></h2>
-            <p class="stats">Bottles per Click: <span id="click-power-display">1</span> | Per Second: <span id="auto-rate-display">0</span></p>
+            <div id="achievement-badge" class="badge glow">Rank: Water Novice 🥉</div>
+            <h2>Bottles: <span id="bottle-count">0</span></h2>
+            <p class="stats">Per Click: <span id="click-power-display">1</span> | Per Sec: <span id="auto-rate-display">0</span></p>
 
-            <button id="click-btn" class="bottle-button">💧</button>
+            <button id="click-btn" class="bottle-button pulse">💧</button>
 
-            <div class="upgrades">
-                <h3>Upgrades & Equipment</h3>
-
-                <button id="buy-click-upgrade" class="upgrade-btn">
-                    Stronger Grip (+1 per click)<br>Cost: <span id="click-upgrade-cost">15</span>
-                </button>
-
-                <button id="buy-dispenser" class="upgrade-btn">
-                    Water Dispenser (+1/sec)<br>Cost: <span id="dispenser-cost">50</span>
-                </button>
-
-                <button id="buy-mega-click" class="upgrade-btn">
-                    Hydration Filter (+5 per click)<br>Cost: <span id="mega-click-cost">200</span>
-                </button>
-
-                <button id="buy-truck" class="upgrade-btn">
-                    Delivery Truck (+10/sec)<br>Cost: <span id="truck-cost">500</span>
-                </button>
-
-                <button id="buy-factory" class="upgrade-btn">
-                    Bottling Factory (+50/sec)<br>Cost: <span id="factory-cost">2000</span>
-                </button>
-            </div>
+            <h3>20 Hydration Upgrades</h3>
+            <div id="upgrades-container" class="upgrades-scroll">
+                </div>
         </section>
 
         <section id="snake-section" class="game-card tab-content">
@@ -56,7 +47,63 @@
             <canvas id="snakeCanvas" width="300" height="300"></canvas>
             <br>
             <button id="start-snake-btn" class="action-btn">Start / Restart Snake</button>
-            <p class="instructions">Use Arrow Keys or WASD to control the snake!</p>
+        </section>
+
+        <section id="ttt-section" class="game-card tab-content">
+            <h2>Tic-Tac-Toe ❌⭕</h2>
+            <p id="ttt-status">Player X's Turn</p>
+            <div class="ttt-board" id="ttt-board">
+                <button class="ttt-cell" data-index="0"></button>
+                <button class="ttt-cell" data-index="1"></button>
+                <button class="ttt-cell" data-index="2"></button>
+                <button class="ttt-cell" data-index="3"></button>
+                <button class="ttt-cell" data-index="4"></button>
+                <button class="ttt-cell" data-index="5"></button>
+                <button class="ttt-cell" data-index="6"></button>
+                <button class="ttt-cell" data-index="7"></button>
+                <button class="ttt-cell" data-index="8"></button>
+            </div>
+            <button id="reset-ttt-btn" class="action-btn">Reset Game</button>
+        </section>
+
+        <section id="chess-section" class="game-card tab-content">
+            <h2>Quick Chess ♟️</h2>
+            <p id="chess-status">White's Turn - Click a piece to select/move</p>
+            <div id="chess-board" class="chess-board"></div>
+            <button id="reset-chess-btn" class="action-btn">Reset Board</button>
+        </section>
+
+        <section id="calc-section" class="game-card tab-content">
+            <div class="ti84-body">
+                <div class="ti84-header">TI-84 Plus CE</div>
+                <input type="text" id="calc-display" class="ti84-screen" readonly value="0">
+                <div class="ti84-keypad">
+                    <button class="calc-btn fn">2nd</button>
+                    <button class="calc-btn fn">MODE</button>
+                    <button class="calc-btn fn">DEL</button>
+                    <button class="calc-btn clear" id="calc-clear">CLEAR</button>
+
+                    <button class="calc-btn" onclick="calcInput('7')">7</button>
+                    <button class="calc-btn" onclick="calcInput('8')">8</button>
+                    <button class="calc-btn" onclick="calcInput('9')">9</button>
+                    <button class="calc-btn op" onclick="calcInput('/')">÷</button>
+
+                    <button class="calc-btn" onclick="calcInput('4')">4</button>
+                    <button class="calc-btn" onclick="calcInput('5')">5</button>
+                    <button class="calc-btn" onclick="calcInput('6')">6</button>
+                    <button class="calc-btn op" onclick="calcInput('*')">×</button>
+
+                    <button class="calc-btn" onclick="calcInput('1')">1</button>
+                    <button class="calc-btn" onclick="calcInput('2')">2</button>
+                    <button class="calc-btn" onclick="calcInput('3')">3</button>
+                    <button class="calc-btn op" onclick="calcInput('-')">-</button>
+
+                    <button class="calc-btn" onclick="calcInput('0')">0</button>
+                    <button class="calc-btn" onclick="calcInput('.')">.</button>
+                    <button class="calc-btn enter" id="calc-equals">=</button>
+                    <button class="calc-btn op" onclick="calcInput('+')">+</button>
+                </div>
+            </div>
         </section>
     </main>
 

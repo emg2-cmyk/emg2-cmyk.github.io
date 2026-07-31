@@ -3,33 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Water Bottle Clicker</title>
-    <!-- Link to our external CSS stylesheet -->
+    <title>Ultimate Hydration Hub</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <header>
+        <h1>💧 Ultimate Hydration Hub 💧</h1>
+        <button id="theme-btn" class="theme-toggle">🌙 Dark Mode</button>
+        <nav class="tab-nav">
+            <button id="tab-clicker-btn" class="tab-btn active">Water Clicker</button>
+            <button id="tab-snake-btn" class="tab-btn">Snake Game 🐍</button>
+        </nav>
+    </header>
 
-    <div class="game-container">
-        <h1>💧 Water Bottle Clicker 💧</h1>
-        <p>Stay hydrated and click the bottle to stack up water!</p>
-        
-        <!-- Score display -->
-        <div class="score-board">
-            <span id="score">0</span> Water Bottles
-        </div>
+    <main>
+        <section id="clicker-section" class="game-card tab-content active">
+            <div id="achievement-badge" class="badge">Title: Water Novice 🥉</div>
+            
+            <h2>Bottles Collected: <span id="bottle-count">0</span></h2>
+            <p class="stats">Bottles per Click: <span id="click-power-display">1</span> | Per Second: <span id="auto-rate-display">0</span></p>
 
-        <!-- Clickable Water Bottle Image -->
-        <div id="click-target" class="bottle">
-            🧴
-        </div>
+            <button id="click-btn" class="bottle-button">💧</button>
 
-        <!-- Upgrade Button -->
-        <div class="shop">
-            <button id="upgrade-btn">Buy Water Filter (Cost: <span id="upgrade-cost">15</span>) - +1 Per Click</button>
-        </div>
-    </div>
+            <div class="upgrades">
+                <h3>Upgrades & Equipment</h3>
 
-    <!-- Link to our external JavaScript file -->
+                <button id="buy-click-upgrade" class="upgrade-btn">
+                    Stronger Grip (+1 per click)<br>Cost: <span id="click-upgrade-cost">15</span>
+                </button>
+
+                <button id="buy-dispenser" class="upgrade-btn">
+                    Water Dispenser (+1/sec)<br>Cost: <span id="dispenser-cost">50</span>
+                </button>
+
+                <button id="buy-mega-click" class="upgrade-btn">
+                    Hydration Filter (+5 per click)<br>Cost: <span id="mega-click-cost">200</span>
+                </button>
+
+                <button id="buy-truck" class="upgrade-btn">
+                    Delivery Truck (+10/sec)<br>Cost: <span id="truck-cost">500</span>
+                </button>
+
+                <button id="buy-factory" class="upgrade-btn">
+                    Bottling Factory (+50/sec)<br>Cost: <span id="factory-cost">2000</span>
+                </button>
+            </div>
+        </section>
+
+        <section id="snake-section" class="game-card tab-content">
+            <h2>Snake Mini-Game 🐍</h2>
+            <p>Score: <span id="snake-score">0</span></p>
+            <canvas id="snakeCanvas" width="300" height="300"></canvas>
+            <br>
+            <button id="start-snake-btn" class="action-btn">Start / Restart Snake</button>
+            <p class="instructions">Use Arrow Keys or WASD to control the snake!</p>
+        </section>
+    </main>
+
     <script src="script.js"></script>
 </body>
 </html>

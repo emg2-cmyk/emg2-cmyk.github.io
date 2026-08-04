@@ -3,111 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mega RGB Hydration Arcade</title>
+    <title>Squad Ride & Schedule</title>
+    
+    <!-- Leaflet Map CSS (Loaded securely from the web) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+    
+    <!-- Your Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="rgb-bg">
-    <div class="farm-sky">
-        <div class="flying-animal animal-1">🐄</div>
-        <div class="flying-animal animal-2">🐖</div>
-        <div class="flying-animal animal-3">🐔</div>
-        <div class="flying-animal animal-4">🐑</div>
-        <div class="flying-animal animal-5">🐴</div>
-    </div>
-
+<body>
     <header>
-        <h1 class="rainbow-text">✨ Ultimate Hydration Arcade ✨</h1>
-        <button id="theme-btn" class="theme-toggle">🌙 Toggle Theme Mode</button>
-        
-        <nav class="tab-nav">
-            <button id="tab-clicker-btn" class="tab-btn active">Clicker Game 💧</button>
-            <button id="tab-snake-btn" class="tab-btn">Snake 🐍</button>
-            <button id="tab-ttt-btn" class="tab-btn">Tic-Tac-Toe ❌⭕</button>
-            <button id="tab-chess-btn" class="tab-btn">Chess ♟️</button>
-            <button id="tab-calc-btn" class="tab-btn">TI-84 CE 🧮</button>
-        </nav>
+        <h1>🚗 Squad Ride & Schedule</h1>
+        <p>Welcome, <span id="userNameDisplay">Guest</span>! <button id="loginBtn">Set Name</button></p>
     </header>
 
     <main>
-        <section id="clicker-section" class="game-card tab-content active">
-            <div id="achievement-badge" class="badge glow">Rank: Water Novice 🥉</div>
-            <h2>Bottles: <span id="bottle-count">0</span></h2>
-            <p class="stats">Per Click: <span id="click-power-display">1</span> | Per Sec: <span id="auto-rate-display">0</span></p>
-
-            <button id="click-btn" class="bottle-button pulse">💧</button>
-
-            <h3>20 Hydration Upgrades</h3>
-            <div id="upgrades-container" class="upgrades-scroll">
-                </div>
+        <!-- Section 1: Schedule -->
+        <section id="schedule-section">
+            <h2>📅 Availability</h2>
+            <p>Select when you are free to hang out:</p>
+            <button id="addAvailabilityBtn">Add My Availability</button>
+            <ul id="schedule-board">
+                <!-- Example data -->
+                <li><strong>Alex:</strong> Friday @ 7:00 PM</li>
+                <li><strong>Jordan:</strong> Saturday @ 12:00 PM</li>
+            </ul>
         </section>
 
-        <section id="snake-section" class="game-card tab-content">
-            <h2>Snake Mini-Game 🐍</h2>
-            <p>Score: <span id="snake-score">0</span></p>
-            <canvas id="snakeCanvas" width="300" height="300"></canvas>
-            <br>
-            <button id="start-snake-btn" class="action-btn">Start / Restart Snake</button>
-            <p class="instructions">Controls: Arrow Keys or W-A-S-D</p>
+        <!-- Section 2: The Map -->
+        <section id="map-section">
+            <h2>🗺️ Pickup Map</h2>
+            <p>Click on the map to drop a pin for your pickup location:</p>
+            <!-- The map loads inside this div -->
+            <div id="map"></div>
         </section>
 
-        <section id="ttt-section" class="game-card tab-content">
-            <h2>Tic-Tac-Toe ❌⭕</h2>
-            <p id="ttt-status">Player X's Turn</p>
-            <div class="ttt-board" id="ttt-board">
-                <button class="ttt-cell" data-index="0"></button>
-                <button class="ttt-cell" data-index="1"></button>
-                <button class="ttt-cell" data-index="2"></button>
-                <button class="ttt-cell" data-index="3"></button>
-                <button class="ttt-cell" data-index="4"></button>
-                <button class="ttt-cell" data-index="5"></button>
-                <button class="ttt-cell" data-index="6"></button>
-                <button class="ttt-cell" data-index="7"></button>
-                <button class="ttt-cell" data-index="8"></button>
+        <!-- Section 3: Ride Board -->
+        <section id="rides-section">
+            <h2>🚙 Ride Board</h2>
+            
+            <div class="driver-board">
+                <h3>Drivers Offering Rides</h3>
+                <button id="offerRideBtn">I can drive!</button>
+                <ul id="driver-list">
+                    <!-- Example data -->
+                    <li><strong>Alex</strong> - 3 seats left</li>
+                </ul>
             </div>
-            <button id="reset-ttt-btn" class="action-btn">Reset Game</button>
-        </section>
 
-        <section id="chess-section" class="game-card tab-content">
-            <h2>Interactive Chess ♟️</h2>
-            <p id="chess-status">White's Turn — Click a piece to select, then click a square to move!</p>
-            <div id="chess-board" class="chess-board"></div>
-            <button id="reset-chess-btn" class="action-btn">Reset Board</button>
-        </section>
-
-        <section id="calc-section" class="game-card tab-content">
-            <div class="ti84-body">
-                <div class="ti84-header">TI-84 Plus CE</div>
-                <input type="text" id="calc-display" class="ti84-screen" readonly value="0">
-                <div class="ti84-keypad">
-                    <button class="calc-btn fn">2nd</button>
-                    <button class="calc-btn fn">MODE</button>
-                    <button class="calc-btn fn">DEL</button>
-                    <button class="calc-btn clear" id="calc-clear">CLEAR</button>
-
-                    <button class="calc-btn num-btn" data-val="7">7</button>
-                    <button class="calc-btn num-btn" data-val="8">8</button>
-                    <button class="calc-btn num-btn" data-val="9">9</button>
-                    <button class="calc-btn op num-btn" data-val="/">÷</button>
-
-                    <button class="calc-btn num-btn" data-val="4">4</button>
-                    <button class="calc-btn num-btn" data-val="5">5</button>
-                    <button class="calc-btn num-btn" data-val="6">6</button>
-                    <button class="calc-btn op num-btn" data-val="*">×</button>
-
-                    <button class="calc-btn num-btn" data-val="1">1</button>
-                    <button class="calc-btn num-btn" data-val="2">2</button>
-                    <button class="calc-btn num-btn" data-val="3">3</button>
-                    <button class="calc-btn op num-btn" data-val="-">-</button>
-
-                    <button class="calc-btn num-btn" data-val="0">0</button>
-                    <button class="calc-btn num-btn" data-val=".">.</button>
-                    <button class="calc-btn enter" id="calc-equals">=</button>
-                    <button class="calc-btn op num-btn" data-val="+">+</button>
-                </div>
+            <div class="rider-board">
+                <h3>People Needing Rides</h3>
+                <button id="needRideBtn">I need a ride</button>
+                <ul id="rider-list">
+                    <!-- Example data -->
+                    <li><strong>Jordan</strong> - Needs a ride</li>
+                </ul>
             </div>
         </section>
     </main>
 
-    <script src="script.js"></script>
+    <!-- Leaflet Map JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    
+    <!-- Your Custom JavaScript -->
+    <script src="app.js"></script>
 </body>
 </html>

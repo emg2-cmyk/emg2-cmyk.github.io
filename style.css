@@ -1,296 +1,129 @@
-/* Color Palette and Variables */
+/* style.css - Desktop Dashboard Layout */
 :root {
-    --card-bg: rgba(15, 23, 42, 0.85);
-    --text-color: #38bdf8;
-    --accent-color: #8957e5;
-    --border-color: #334155;
+    --primary-color: #2c3e50;
+    --accent-color: #3498db;
+    --bg-color: #ecf0f1;
+    --card-bg: #ffffff;
+    --text-color: #333;
 }
 
-/* ANIMATED RGB BACKGROUND */
-body.rgb-bg {
-    background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #1de840, #1ddde8, #2b1de8, #dd1de8);
-    background-size: 1000% 1000%;
-    animation: rgbGradient 12s ease infinite;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
     color: var(--text-color);
     margin: 0;
-    padding: 20px;
+    padding: 0;
+}
+
+header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+h1 { margin: 0; font-size: 28px; }
+header p { margin: 0; font-size: 16px; display: flex; align-items: center; gap: 15px; }
+
+main {
+    max-width: 1600px;
+    margin: 30px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 25px;
+    align-items: start;
+}
+
+section {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    overflow-x: hidden;
 }
 
-@keyframes rgbGradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+h2 { 
+    border-bottom: 3px solid var(--accent-color); 
+    padding-bottom: 10px; 
+    margin-top: 0;
 }
 
-/* FLYING FARM ANIMALS ANIMATION */
-.farm-sky {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    z-index: 0;
-    overflow: hidden;
+h3 {
+    color: var(--primary-color);
+    margin-top: 20px;
 }
 
-.flying-animal {
-    position: absolute;
-    font-size: 45px;
+/* Map styling */
+#map-section {
+    height: 600px; 
 }
 
-.animal-1 { top: 10%; animation: flyRight 8s linear infinite; }
-.animal-2 { top: 30%; animation: flyLeft 11s linear infinite; }
-.animal-3 { top: 50%; animation: floatDiagonal 9s ease-in-out infinite alternate; }
-.animal-4 { top: 70%; animation: flyRight 13s linear infinite; }
-.animal-5 { top: 85%; animation: flyLeft 7s linear infinite; }
-
-@keyframes flyRight {
-    0% { left: -10%; transform: rotate(0deg); }
-    100% { left: 110%; transform: rotate(360deg); }
-}
-
-@keyframes flyLeft {
-    0% { right: -10%; transform: rotate(0deg); }
-    100% { right: 110%; transform: rotate(-360deg); }
-}
-
-@keyframes floatDiagonal {
-    0% { left: 0%; top: 20%; transform: scale(1); }
-    100% { left: 90%; top: 80%; transform: scale(1.5); }
-}
-
-/* RAINBOW ANIMATED HEADER */
-.rainbow-text {
-    background: linear-gradient(90deg, #ffffff, #ffe600, #00ffff, #ff00ea, #ffffff);
-    background-size: 400%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: rainbowShift 4s linear infinite;
-    font-size: 2.2rem;
-    text-align: center;
-    text-shadow: 0 0 10px rgba(255,255,255,0.5);
-}
-
-@keyframes rainbowShift {
-    0% { background-position: 0%; }
-    100% { background-position: 400%; }
-}
-
-/* NAVIGATION TABS */
-.tab-nav {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 10px;
-    z-index: 10;
-}
-
-.tab-btn {
-    background: var(--card-bg);
-    color: #ffffff;
-    border: 2px solid #38bdf8;
-    padding: 8px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    backdrop-filter: blur(5px);
-}
-
-.tab-btn.active {
-    background: #0284c7;
-    color: white;
-    box-shadow: 0 0 12px #38bdf8;
-}
-
-.tab-content { display: none; }
-.tab-content.active { display: block; }
-
-/* GAME CARD & UPGRADES */
-.game-card {
-    background: var(--card-bg);
-    padding: 20px;
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-    max-width: 440px;
+#map {
+    flex-grow: 1;
     width: 100%;
-    text-align: center;
-    backdrop-filter: blur(10px);
-    box-sizing: border-box;
-    z-index: 10;
-    position: relative;
-    margin-top: 15px;
-}
-
-.upgrades-scroll {
-    max-height: 220px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.upgrade-btn {
-    background: linear-gradient(135deg, #0284c7, #7c3aed);
-    color: white;
-    border: none;
-    padding: 10px;
     border-radius: 8px;
-    cursor: pointer;
-    font-size: 13px;
-    text-align: left;
-}
-
-.upgrade-btn:disabled {
-    background: #475569;
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.bottle-button {
-    font-size: 80px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.1s;
-}
-
-.bottle-button:active { transform: scale(0.8); }
-
-/* SNAKE CANVAS */
-#snakeCanvas {
-    background-color: #0f172a;
-    border: 3px solid #38bdf8;
-    border-radius: 8px;
+    border: 2px solid #bdc3c7;
     margin-top: 10px;
+    z-index: 1; /* Keeps map markers from overlapping the top bar */
 }
 
-.instructions {
-    font-size: 12px;
-    color: #94a3b8;
-}
-
-/* TIC-TAC-TOE BOARD */
-.ttt-board {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin: 15px auto;
-    max-width: 240px;
-}
-
-.ttt-cell {
-    width: 70px;
-    height: 70px;
-    font-size: 32px;
-    background: #1e293b;
-    border: 2px solid #38bdf8;
+button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 12px 20px;
     border-radius: 8px;
+    font-size: 16px;
     cursor: pointer;
-    color: #ffffff;
-}
-
-/* CHESS BOARD */
-.chess-board {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    width: 280px;
-    height: 280px;
-    margin: 15px auto;
-    border: 3px solid #38bdf8;
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-.chess-square {
-    width: 35px;
-    height: 35px;
-    font-size: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    user-select: none;
-}
-
-.chess-square.light { background: #e2e8f0; color: #0f172a; }
-.chess-square.dark { background: #334155; color: #ffffff; }
-.chess-square.selected { background: #f59e0b !important; }
-
-/* TI-84 CE CALCULATOR UI */
-.ti84-body {
-    background: #0f172a;
-    border-radius: 16px;
-    padding: 15px;
-    border: 3px solid #38bdf8;
-}
-
-.ti84-header {
-    color: #94a3b8;
-    font-size: 12px;
     font-weight: bold;
-    margin-bottom: 8px;
-}
-
-.ti84-screen {
-    width: 90%;
-    height: 40px;
-    background: #86efac;
-    color: #064e3b;
-    font-family: 'Courier New', monospace;
-    font-size: 20px;
-    text-align: right;
-    padding: 5px 10px;
-    border-radius: 4px;
-    border: none;
-    margin-bottom: 15px;
-}
-
-.ti84-keypad {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 6px;
-}
-
-.calc-btn {
-    padding: 10px;
-    font-size: 14px;
-    border-radius: 6px;
-    border: none;
-    background: #1e293b;
-    color: white;
-    cursor: pointer;
-}
-
-.calc-btn.op { background: #0284c7; }
-.calc-btn.fn { background: #7c3aed; }
-.calc-btn.enter { background: #16a34a; }
-.calc-btn.clear { background: #dc2626; }
-
-.action-btn {
-    background: #0284c7;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 8px;
+    transition: background-color 0.2s;
     width: 100%;
-    margin-top: 10px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.theme-toggle {
-    background: rgba(15, 23, 42, 0.8);
-    color: white;
-    border: 2px solid #38bdf8;
-    padding: 8px 16px;
-    border-radius: 20px;
-    cursor: pointer;
     margin-bottom: 10px;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+header button {
+    width: auto;
+    padding: 8px 15px;
+    font-size: 14px;
+    background-color: white;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+header button:hover {
+    background-color: #f1f1f1;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    background: #f8f9fa;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 5px solid var(--accent-color);
+    font-size: 15px;
+}
+
+/* Stacks neatly if opened on a laptop or iPad */
+@media (max-width: 1024px) {
+    main {
+        grid-template-columns: 1fr;
+    }
+    #map-section {
+        height: 400px;
+    }
 }

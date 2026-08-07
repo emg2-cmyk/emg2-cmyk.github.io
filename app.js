@@ -3,6 +3,20 @@
    Main application logic: Firebase sync, RSVP, Rides, Map
    ================================================================ */
 
+// ─────────────────────────────────────────────
+// Firebase config — auto-configured for hangout-hq
+// ─────────────────────────────────────────────
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyC3_DQxg91x9qEt2x0VOoCSfNeUzCSEskM",
+  authDomain: "hangout-hq.firebaseapp.com",
+  databaseURL: "https://hangout-hq-default-rtdb.firebaseio.com",
+  projectId: "hangout-hq",
+  storageBucket: "hangout-hq.firebasestorage.app",
+  messagingSenderId: "795264488712",
+  appId: "1:795264488712:web:58e85797a58b0c3194c8bd"
+};
+// ─────────────────────────────────────────────
+
 'use strict';
 
 // ─────────────────────────────────────────────

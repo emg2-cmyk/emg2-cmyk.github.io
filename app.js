@@ -41,7 +41,18 @@ function initials(name) {
 
 function formatDate(iso) {
   if (!iso) return '';
-  const d = new Date(iso);
+  // datetime-local gives "YYYY-MM-DDTHH:MM" — parse parts manually to avoid UTC shift
+  const [datePart, timePart] = iso.split('T');
+  if (!datePart) return '';
+  const [year, month, day] = datePart.split('-').map(Number);
+  let d;
+  if (timePart) {
+    const [hour, minute] = timePart.split(':').map(Number);
+    d = new Date(year, month - 1, day, hour, minute);
+  } else {
+    d = new Date(year, month - 1, day);
+  }
+  if (isNaN(d)) return iso; // fallback to raw string
   return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
 }
 

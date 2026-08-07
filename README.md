@@ -1,4 +1,3 @@
-# emg2-cmyk.github.io
 # Hangout HQ 🍕
 
 **Plan hangouts with your crew.** Schedule events, coordinate rides, and see everyone on the map — all in one place.
